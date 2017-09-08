@@ -1,0 +1,337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="Generator" content="ECSHOP v2.7.2" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="" />
+<meta name="Description" content="" />
+
+<title>购物流程_京东网上商城-综合网购首选，正品行货，机打发票，售后上门取件，省钱又放心 - Powered by ECShop</title>
+
+<link href="__PUBLIC__/themes/jindong/stye1024.css" rel="stylesheet" type="text/css" />  
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="icon" href="animated_favicon.gif" type="image/gif" />
+
+
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script><script type="text/javascript" src="__PUBLIC__/js/shopping_flow.js"></script></head>
+<body>
+<include file="Public/header"/>
+
+<div class="p_w" style="clear:both; overflow:hidden"></div>
+
+
+
+<div id="urHere" class="globalModule">
+  <h3><a href=".">首页</a> <code>&gt;</code> 购物流程</h3>
+</div>
+<div class="blank"></div>
+    
+  
+  <script type="text/javascript" src="__PUBLIC__/js/showdiv.js"></script>  <script type="text/javascript">
+      var user_name_empty = "请输入您的用户名！";
+      var email_address_empty = "请输入您的电子邮件地址！";
+      var email_address_error = "您输入的电子邮件地址格式不正确！";
+      var new_password_empty = "请输入您的新密码！";
+      var confirm_password_empty = "请输入您的确认密码！";
+      var both_password_error = "您两次输入的密码不一致！";
+      var show_div_text = "请点击更新购物车按钮";
+      var show_div_exit = "关闭";
+    </script>
+  <div style="width:80%; margin:0 AUTO">
+  <div class="flow_tou">
+      <img  style="float:left"src="__PUBLIC__/themes/jindong/images/cart_001.gif" />
+     <span> 购物满400元，部分地区免运费，<a href="#">详细了解>></a></span>
+  </div>
+  <div class="blank5"></div>
+  
+  <div class="flowBox_title">
+  	<dl></dl><dt>我挑选的商品</dt><dd></dd>
+  </div>
+  <div class="flowBox">
+        <form id="formCart" name="formCart" method="post" action="__URL__/update">
+           <table width="99%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#aacded">
+            <tr>
+              <th bgcolor="#ebf4fb">商品名称</th>
+                          
+                            <th bgcolor="#ebf4fb">美智价</th>
+              <th bgcolor="#ebf4fb">购买数量</th>
+              <th bgcolor="#ebf4fb">小计</th>
+              <th bgcolor="#ebf4fb">操作</th>
+            </tr>
+            
+            <foreach name='arr' item='v'>
+           <tr>
+              <td bgcolor="#ffffff" align="left">
+                                                      <a href="__MODULE__/Product/detail/pid/{$v.id}" target="_blank"><img width="90" src="__PUBLIC__/Upload/Product/{$v.imagename}" border="0" title="产品20" /></a><br />
+                    <a href="__MODULE__/Product/detail/pid/{$v.id}" target="_blank" class="f6">{$v.title}</a>
+                                                                                    </td>
+            
+                            <td align="center" bgcolor="#ffffff">￥{$v.price}元</td>
+              <td align="center" bgcolor="#ffffff">
+               <input type="text" name="goods_number[{$v.id}]" id="goods_number_{$v.id}" value="{$v.buynum}" size="4" class="inputBg" style="text-align:center " onkeydown="showdiv(this)"/>
+             </td>
+              <td align="center" bgcolor="#ffffff">￥{$v.zong}元</td>
+              <td align="center" bgcolor="#ffffff">
+                <a href="javascript:if (confirm('您确实要把该商品移出购物车吗？')) location.href='__URL__/del/pid/{$v.id}'; " class="f6">删除</a>
+                        </td>
+            </tr>
+            </foreach>
+            
+            
+           
+                         <tr>
+              <td colspan="7" align="right" bgcolor="#ebf4fb" style="color:#F00; font-weight:bold">
+              购物金额小计 ￥{$sum}元</td>
+             </tr>
+          </table>
+         
+          <input type="hidden" name="step" value="update_cart" />
+       
+        <table width="99%" align="center" border="0" cellpadding="5" cellspacing="0" bgcolor="#aacded">
+          <tr>
+            <td bgcolor="#ffffff" style="padding:20px;0"><a href="__MODULE__/Product/lister/id/3"><img style="vertical-align:middle;" src="__PUBLIC__/themes/jindong/images/jixubuy.gif" /></a>&nbsp;&nbsp;&nbsp;&nbsp;
+
+            
+            <input style="vertical-align:middle;"  type="button" value="" class="clear_car" onclick="location.href='__URL__/clear'" />&nbsp;&nbsp;&nbsp;&nbsp;
+            
+            
+            <input style="vertical-align:middle;" name="submit" type="submit" class="gengxin_car" value="" /></td>
+            <td bgcolor="#ffffff" align="right" style="padding:20px;0"><a href="checkout.html"><img src="__PUBLIC__/themes/jindong/images/checkout.gif" alt="checkout" /></a></td>
+          </tr>
+        </table>
+         </form>
+                     <script type="text/javascript" charset="utf-8">
+        function collect_to_flow(goodsId)
+        {
+          var goods        = new Object();
+          var spec_arr     = new Array();
+          var fittings_arr = new Array();
+          var number       = 1;
+          goods.spec     = spec_arr;
+          goods.goods_id = goodsId;
+          goods.number   = number;
+          goods.parent   = 0;
+          Ajax.call('flow.php?step=add_to_cart', 'goods=' + goods.toJSONString(), collect_to_flow_response, 'POST', 'JSON');
+        }
+        function collect_to_flow_response(result)
+        {
+          if (result.error > 0)
+          {
+            // 如果需要缺货登记，跳转
+            if (result.error == 2)
+            {
+              if (confirm(result.message))
+              {
+                location.href = 'user.php?act=add_booking&id=' + result.goods_id;
+              }
+            }
+            else if (result.error == 6)
+            {
+              openSpeDiv(result.message, result.goods_id);
+            }
+            else
+            {
+              alert(result.message);
+            }
+          }
+          else
+          {
+            location.href = 'flow.php';
+          }
+        }
+      </script>
+
+
+        </div>
+
+ <div class="blank"></div>
+    <div class="blank"></div>
+  
+  
+    <div class="flowBox_title">
+  	<dl></dl><dt>我的收藏</dt><dd></dd>
+    </div>
+    <div class="flowBox">
+    <table width="99%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#aacded">
+                <tr>
+            <td bgcolor="#ffffff"><a href="goods.php?id=4779" class="f6">产品20</a></td>
+              <td bgcolor="#ffffff" align="center" width="100"><a href="javascript:addToCart(4779)" class="f6">立即购买</a></td>
+
+          </tr>
+              </table>
+        </div>
+            
+      
+      
+      
+      
+      
+      
+      
+      
+ 
+    <div class="blank5"></div>
+    </div>
+  
+  
+  
+
+        
+        
+        		
+        
+
+  <div class="blank"></div> 
+
+ <div class="blank"></div>
+
+<div id="globalHelp" class="globalModule">
+<div class="clearfix">
+<dl>
+<dt>
+<img src="__PUBLIC__/themes/jindong/images/help_1.gif" />
+<a href='article_cat.php?id=5' title="购物指南">购物指南</a>
+</dt>
+<div class="blank5"></div>
+    <dd><a href="article.php?id=9" title="购物流程">购物流程</a></dd>
+    <dd><a href="article.php?id=10" title="会员介绍">会员介绍</a></dd>
+    <dd><a href="article.php?id=36" title="常见问题">常见问题</a></dd>
+  </dl>
+<dl>
+<dt>
+<img src="__PUBLIC__/themes/jindong/images/help_2.gif" />
+<a href='article_cat.php?id=7' title="配送方式">配送方式</a>
+</dt>
+<div class="blank5"></div>
+    <dd><a href="article.php?id=15" title="快递运输">快递运输</a></dd>
+    <dd><a href="article.php?id=16" title="特快专递(EMS)">特快专递(EMS)</a></dd>
+    <dd><a href="article.php?id=43" title="上门自提">上门自提</a></dd>
+  </dl>
+<dl>
+<dt>
+<img src="__PUBLIC__/themes/jindong/images/help_3.gif" />
+<a href='article_cat.php?id=10' title="支付方式">支付方式</a>
+</dt>
+<div class="blank5"></div>
+    <dd><a href="article.php?id=18" title="货到付款">货到付款</a></dd>
+    <dd><a href="article.php?id=19" title="在线支付">在线支付</a></dd>
+    <dd><a href="article.php?id=20" title="银行转账">银行转账</a></dd>
+    <dd><a href="article.php?id=37" title="分期付款">分期付款</a></dd>
+  </dl>
+<dl>
+<dt>
+<img src="__PUBLIC__/themes/jindong/images/help_4.gif" />
+<a href='article_cat.php?id=8' title="售后服务">售后服务</a>
+</dt>
+<div class="blank5"></div>
+    <dd><a href="article.php?id=21" title="退换货原则">退换货原则</a></dd>
+    <dd><a href="article.php?id=22" title="退换货流程">退换货流程</a></dd>
+    <dd><a href="article.php?id=23" title="价格保护">价格保护</a></dd>
+    <dd><a href="article.php?id=38" title="退款说明">退款说明</a></dd>
+  </dl>
+<dl>
+<dt>
+<img src="__PUBLIC__/themes/jindong/images/help_5.gif" />
+<a href='article_cat.php?id=9' title="特色服务">特色服务</a>
+</dt>
+<div class="blank5"></div>
+    <dd><a href="article.php?id=24" title="商品拍卖">商品拍卖</a></dd>
+    <dd><a href="article.php?id=25" title="DIY装机">DIY装机</a></dd>
+    <dd><a href="article.php?id=26" title="上门服务">上门服务</a></dd>
+    <dd><a href="article.php?id=39" title="上门装机">上门装机</a></dd>
+    <dd><a href="article.php?id=40" title="香港代购">香港代购</a></dd>
+  </dl>
+</div>
+<div class="blank"></div>
+<div class="blank"></div>
+
+
+<div class="serve clearfix">
+
+<ul  class="line"><img src="__PUBLIC__/themes/jindong/images/serve_1.gif"></ul>
+<ul  class="line"><img src="__PUBLIC__/themes/jindong/images/serve_2.gif"></ul>
+<ul  class="line"><img src="__PUBLIC__/themes/jindong/images/serve_3.gif"></ul>
+<ul ><img src="__PUBLIC__/themes/jindong/images/serve_4.gif"></ul>
+
+</div>
+
+
+</div>
+
+
+<div class="blank"></div>
+    <div id="globalFooter">
+<p id="footerNav">
+        <a href="article.php?id=1" >关于我们</a> 
+        |
+          <a href="article.php?id=2" >联系我们</a> 
+        |
+          <a href="article.php?id=3" >广告服务</a> 
+        |
+          <a href="http://jetli.taobao.com/" >品牌加盟</a> 
+        |
+          <a href="wholesale.php" >批发方案</a> 
+        |
+          <a href="myship.php" >配送方式</a> 
+       | <script type="text/javascript" src="__PUBLIC__/js/dialog3.js"></script>
+  </p>
+  <p id="copyright">&copy; 2005-2012 京东网上商城 版权所有，并保留所有权利。</p>
+   
+    
+  <p id="address">
+        
+  </p>
+  <p id="phone">
+  	</p>
+	  <p id="imList">
+            <img src="http://wpa.qq.com/pa?p=1:393769718:4" alt="QQ" /> <a href="http://wpa.qq.com/msgrd?V=1&amp;Uin=393769718&amp;Site=京东网上商城&amp;Menu=yes" target="_blank">393769718</a>
+                    <img src="http://amos1.taobao.com/online.ww?v=2&amp;uid=tddt8&amp;s=2" alt="淘宝旺旺" /><a href="http://amos1.taobao.com/msg.ww?v=2&amp;uid=tddt8&amp;s=2" target="_blank"> tddt8</a>
+                                              </p>
+  <p id="qureyInfo">共执行 346 个查询，用时 0.186623 秒，在线 2 人，Gzip 已禁用，占用内存 5.901 MB<img src="api/cron.php?t=1344206124" alt="" style="width:0px;height:0px;" /></p>
+
+    
+    <div align="center" ></div>
+
+<div class="blank"></div>
+
+<div style="text-align:center">
+<a href="http://www.miibeian.gov.cn"><img src="__PUBLIC__/themes/jindong/images/fot_1.gif"></a> <a href="#"><img src="__PUBLIC__/themes/jindong/images/fot_2.gif"></a> <a href="http://police.cnool.net/infoCategoryListAction.do?act=init"><img src="__PUBLIC__/themes/jindong/images/fot_3.gif"></a>
+ </div>      
+</div>  </div>
+</body>
+
+<script type="text/javascript">
+var process_request = "正在处理您的请求...";
+var username_empty = "- 用户名不能为空。";
+var username_shorter = "- 用户名长度不能少于 3 个字符。";
+var username_invalid = "- 用户名只能是由字母数字以及下划线组成。";
+var password_empty = "- 登录密码不能为空。";
+var password_shorter = "- 登录密码不能少于 6 个字符。";
+var confirm_password_invalid = "- 两次输入密码不一致";
+var email_empty = "- Email 为空";
+var email_invalid = "- Email 不是合法的地址";
+var agreement = "- 您没有接受协议";
+var msn_invalid = "- msn地址不是一个有效的邮件地址";
+var qq_invalid = "- QQ号码不是一个有效的号码";
+var home_phone_invalid = "- 家庭电话不是一个有效号码";
+var office_phone_invalid = "- 办公电话不是一个有效号码";
+var mobile_phone_invalid = "- 手机号码不是一个有效号码";
+var msg_un_blank = "* 用户名不能为空";
+var msg_un_length = "* 用户名最长不得超过7个汉字";
+var msg_un_format = "* 用户名含有非法字符";
+var msg_un_registered = "* 用户名已经存在,请重新输入";
+var msg_can_rg = "* 可以注册";
+var msg_email_blank = "* 邮件地址不能为空";
+var msg_email_registered = "* 邮箱已存在,请重新输入";
+var msg_email_format = "* 邮件地址不合法";
+var msg_blank = "不能为空";
+var no_select_question = "- 您没有完成密码提示问题的操作";
+var passwd_balnk = "- 密码中不能包含空格";
+var username_exist = "用户名 %s 已经存在";
+var compare_no_goods = "您没有选定任何需要比较的商品或者比较的商品数少于 2 个。";
+var btn_buy = "购买";
+var is_cancel = "取消";
+var select_spe = "请选择商品属性";
+</script>
+</html>
+

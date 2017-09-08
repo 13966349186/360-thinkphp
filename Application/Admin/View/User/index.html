@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script src="__PUBLIC__/js/jquery.js"></script>
+<script>
+$(function(){
+	$("#dd").hide();
+	$("[name=ad]").click(function(){
+		$(this).hide();
+		$("#dd").show();
+	})
+})
+</script>
+<body>
+<table border="1" align="center" >
+	<tr>
+	    <td>id</td>
+		<td>名字</td>
+		<td>所属角色</td>
+		<td>注册时间</td>
+		<td>操作</td>
+	</tr>
+	
+<foreach name="arr" item="v">
+
+	<tr>
+		<td>{$v.id}</td>
+		<td>{$v.username}</td>
+		<td>普通用户</td>
+		<td>{$v.addtime}</td>
+		<td>&nbsp&nbsp<a href="{:U('User/oper',array('id'=>$v['id']))}">查看用户详细资料</a></td>
+	</tr>
+	</foreach>
+	<foreach name="admin" item="v">
+
+	<tr>
+		<td>{$v.id}</td>
+		<td>{$v.username}</td>
+		<td>VIP</td>
+		<td>禁止访问</td>
+		<td align="center"><a href="#">删除</a></td>
+	</tr>
+	</foreach>
+</table>
+<a href="#" name="ad">添加</a>
+<br /><br /><br />
+<form  id="dd" action="{:U('User/add')}" method="post" align="center" >
+<label>账号</label><br />
+<input type="text"  name="username"/><br />
+<label>密码</label><br />
+<input type="text" name="password" /><br />
+<label>重复密码</label><br />
+<input type="text" name="pass" /><br /><br />
+<label>验证码</label>&nbsp;&nbsp;&nbsp;
+<input type="text" name="verify" /><br /><img src="__APP__/Admin/Verify/show"/><br />
+<input type="submit" value="保存"/>
+<a href="" name="ad"> &nbsp取消</a>
+</form>
+
+</body>
+</html>

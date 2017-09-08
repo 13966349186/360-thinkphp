@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Admin/Css/table.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript">
+/*$(function(){
+getBrand();
+})
+
+function getBrand(){
+//获取选择的分类的value属性值
+var v=$("[name='typestr']").val();
+$.ajax({
+	url:'__URL__/getbrand',
+	data:'typestr='+v,
+	type:'post',
+	success:function(re){
+		$("[name='brandid']").empty();
+		$("[name='brandid']").append(re);
+	}
+})
+}*/
+var brands={$brandjsonstr};
+$(function(){
+	
+getBrand();
+})
+function getBrand(){
+	
+$("[name='brandid']").empty();
+//获取选择的分类的value属性值
+var v=$("[name='typestr']").val();
+var re=v.match(/^-\d+/);
+var typeid=re[0].replace(/-/g,'');
+//根据typeid，获取分类下得品牌
+for(var k in brands){
+	
+	if(brands[k].typeid==typeid){
+		//给brandid这个select追加option
+		$("[name='brandid']").append("<option value='"+brands[k].id+"'>"+brands[k].brandname+"</option>");
+	}
+}
+}
+</script>
+</head>
+<body>
+<div>当前操作：添加产品</div>
+<form action="__URL__/save" method="post" enctype="multipart/form-data">
+	<table class="newslist">
+		<tr>
+			<td>名称：</td>
+			<td><input type="text" name="title"/></td>
+		</tr>
+		<tr>
+			<td>市场价：</td>
+			<td><input type="text" name="price"/></td>
+		</tr>
+		<tr>
+			<td>会员价：</td>
+			<td><input type="text" name="userprice"/></td>
+		</tr>
+		<tr>
+			<td>优惠数量：</td>
+			<td><input type="text" name="jiannum"/></td>
+		</tr>
+		<tr>
+			<td>优惠价格：</td>
+			<td><input type="text" name="jianprice"/></td>
+		</tr>
+		<tr>
+			<td>图片：</td>
+			<td><input type="file" name="upload[]" multiple='multiple'/></td>
+		</tr>
+		<tr>
+			<td>库存：</td>
+			<td><input type="text" name="libnum"/></td>
+		</tr>
+		<tr>
+			<td>分类：</td>
+			<td><select name="typestr" onchange="getBrand()">
+			{$optionStr}
+			</select></td>
+		</tr>
+		<tr>
+			<td>品牌：</td>
+			<td><select name="brandid">
+			
+			</select></td>
+		</tr>
+		<tr>
+			<td>简介：</td>
+			<td><textarea name="content"></textarea></td>
+		</tr>
+		<tr>
+			<td>规格参数：</td>
+			<td><textarea name="style"></textarea></td>
+		</tr>
+		<tr>
+			<td colspan="2"><input type="submit" value="提交"/></td>
+		</tr>
+	</table>
+</form>
+</body>
+</html>

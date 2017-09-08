@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Admin/Css/common.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#ww").click(function(){
+		 $("#main").toggleClass("mainContent");
+		var r=parseInt(255*Math.random());var g=parseInt(255*Math.random());var b=parseInt(255*Math.random());
+		$("#main").css("background","rgb("+r+","+g+","+b+")");
+	})
+})
+
+function setHeight(){
+	var winHeight=$(window).height();
+	var contentHeight=winHeight-88;
+	$(".menu").css('height',contentHeight-8+"px");
+	$(".main .mainContent").css('height',contentHeight-8+"px");
+	//一定给showList加高度
+	$("#showList").css('height',contentHeight-35-8+"px");
+}
+var num=3;
+function hiddenMessage(){
+	num--;
+	if(num<=0){
+		$(".showMessage").hide(1000);
+	}else{
+		$("#num").html(num);
+		setTimeout(hiddenMessage,1000);
+	}
+}
+$(function(){
+	setHeight();
+	$(window).resize(setHeight);
+	setTimeout(hiddenMessage,1000);
+})
+</script>
+</head>
+<body>
+<div class="header"><h1>PSD1702后台管理系统</h1></div>
+<div class="content">
+	<div class="menu">
+	<a href="#" id="ww" align="center">更换颜色</a>
+	<a href="#">time()</a>
+		<div class="menuContent">
+		<h3>个人账号</h3>
+		<a target="main" href="__MODULE__/User/index">添加</a>
+		<a target="main" href="__MODULE__/User/oper">管理</a>
+		<h3>分类管理</h3>
+		<a target="main" href="__MODULE__/Type/add">添加</a>
+		<a target="main" href="__MODULE__/Type/lister">管理</a>
+		<a target="main" href="__MODULE__/Type/oper">管理xx</a>
+		<h3>品牌管理</h3>
+		<a target="main" href="__MODULE__/Brand/add">添加</a>
+		<a target="main" href="__MODULE__/Brand/oper">管理</a>
+		<h3>产品管理</h3>
+		<a target="main" href="__MODULE__/Product/add">添加</a>
+		<a target="main" href="__MODULE__/product/oper">管理</a>
+		</div>
+		
+	</div>
+	<div class="main">
+		<iframe style="width:100%;border:0;diplay:block;" class="mainContent" src="__URL__/welcome" name="main" id="main"></iframe>
+	</div>
+</div>
+</body>
+</html>

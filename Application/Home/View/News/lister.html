@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Css/ul.css"/>
+</head>
+<body>
+<include file="Public/header"/>
+<h1>文章列表：</h1>
+<ul>
+<foreach name="arr" key="k" item="v">
+	<if condition="$k%2 == 0">
+	<li style="background:#abcdef;"><a href="__URL__/detail/id/{$v.id}">{$v.title}---{$v.tname}</a></li>
+	<else/>
+	<li style="background:#fedcba;"><a href="__URL__/detail/id/{$v.id}">{$v.title}---{$v.tname}</a></li>
+	</if>
+</foreach>
+</ul>
+
+<h1>模板替换标签对应的url地址</h1>
+PUBLIC:__PUBLIC__ <br/>
+ROOT:__ROOT__<br/>
+APP:__APP__<br/>
+MODULE:__MODULE__<br/>
+URL:__URL__<br/>
+ACTION:__ACTION__<br/>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

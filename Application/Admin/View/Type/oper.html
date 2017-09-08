@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Admin/Css/table.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript">
+	function getSon(fid,num){
+	$.ajax({
+		url:'__URL__/getson',
+		data:'fid='+fid+'&num='+num,
+		dataType:'json',
+		success:function(re){
+			var typeid;
+			var isExist=false;
+			for (var k in re.sonid){
+					typeid=re.sonid[k].id;
+					if($("#tr_"+typeid).length==1){
+						isExist=true;
+					};
+			};
+			if(isExist==false){
+			$("#tr_"+fid).after(re.html);
+		};
+		}
+	})  
+	}
+</script>
+</head>
+<body>
+<div>当前操作：管理分类</div>
+<table class="newslist">
+	<tr>
+		<th>id</th>
+		<th>tname</th>
+		<th>操作</th>
+	</tr>
+	<foreach name='arr' item="v">
+	<tr id="tr_{$v.id}">
+		<td>{$v.id}</td>
+		<td><a href="javascript:getSon({$v.id},1);">{$v.typename}</a></td>
+		<td><a href="__URL__/update/id/{$v.id}">修改</a>&nbsp;&nbsp;<a href="__URL__/delete/id/{$v.id}">删除</a></td>
+	</tr>
+	</foreach>
+</table>
+</body>
+</html>

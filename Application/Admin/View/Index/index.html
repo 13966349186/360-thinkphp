@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Generator" content="EditPlus®">
+    <meta name="Author" content="">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>梦幻登录弹窗</title>
+    <style>
+        * { margin: 0px; padding: 0px; }
+
+        body { overflow: hidden; }
+
+        #bg_wrap { width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; overflow: hidden; }
+
+        #bg_wrap div { width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; opacity: 0; transition: opacity 3s }
+
+        #bg_wrap div:nth-of-type(1) { opacity: 1 }
+
+        /*第一个背景div*/
+        #Login { width: 272px; height: 300px; margin: 200px auto; }
+
+        #Login .move { position: absolute; top: -100px; }
+
+        #Login h3 { font-size: 30px; font-weight: 700; color: #ffffff; font-family: Andalus; text-align: center; margin-bottom: 30px; cursor: move; }
+
+        #Login input.txt { width: 270px; height: 42px; color: #ffffff; background: rgba(45, 45, 45, .15); border-radius: 6px; border: 1px solid rgba(255, 255, 255, .15); box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset; -webkit-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset; -moz-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset; margin-bottom: 25px; text-shadow: 0 1px 2px rgba(0, 0, 0, .1); text-indent: 10px; }
+
+        #Login input.but { background: #ef4300; width: 272px; height: 44px; box-shadow: 0 15px 30px 0 rgba(255, 255, 255, .25) inset, 0 2px 7px 0 rgba(0, 0, 0, .2); -webkit-box-shadow: 0 15px 30px 0 rgba(255, 255, 255, .25) inset, 0 2px 7px 0 rgba(0, 0, 0, .2); -moz-box-shadow: 0 15px 30px 0 rgba(255, 255, 255, .25) inset, 0 2px 7px 0 rgba(0, 0, 0, .2); border: 0px; border-radius: 6px; color: #ffffff; font-size: 14px; text-align: center; }
+
+        #Login input:focus { outline: none; -webkit-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset, 0 2px 7px 0 rgba(0, 0, 0, .2); -moz-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset, 0 2px 7px 0 rgba(0, 0, 0, .2); box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset, 0 2px 7px 0 rgba(0, 0, 0, .2); }
+
+        /*当input获取焦点的时候*/
+
+        input::-webkit-input-placeholder { color: #ffffff; }
+
+        /*修改输入框默认输入文字颜色*/
+
+        #title { width: 270px; text-align: center }
+    </style>
+</head>
+<body>
+<div id="bg_wrap">
+    <div><img src="__PUBLIC__/images/1.jpg" width="100%" height="100%" alt="背景图"/></div>
+    <div><img src="__PUBLIC__/images/2.jpg" width="100%" height="100%" alt="背景图"/></div>
+    <div><img src="__PUBLIC__/images/3.jpg" width="100%" height="100%" alt="背景图"/></div>
+</div>
+<!--bg_wrap end-->
+<!--Login start-->
+<div id="Login">
+    <h3 id="title" class="move">User Login</h3>
+    <form action="{:U('Index/oper')}" method="post" target="_blank">
+        <input type="text" placeholder="Username" class="txt move" name="username" required autocomplete="off">
+        <input type="password" placeholder="Password" class="txt move" name="password" required>
+        <input type="submit" class="but move" value="Sign in" id="submit"/>
+    </form>
+</div>
+<script>
+    (function () {
+        var timer = null;
+        /*声明定时器*/
+        /*最新的元素获取写法 兼容ie8*/
+        /*一组元素*/
+        var oImg = document.querySelectorAll('#bg_wrap div');
+        var len = oImg.length; //3
+        var index = 0;
+        timer = setInterval(function () {
+            oImg[index].style.opacity = 0;
+            index++;//1 index=index+1;
+            index %= len;  // 求模取余 index=index%len;
+            oImg[index].style.opacity = 1;
+        }, 3000);
+    })();
+    // 表单重力模拟弹跳系统
+    (function () {
+        var oMove = document.querySelectorAll('.move');
+        var len = oMove.length;
+        var timer = null;
+        var timeout = null; //setTimeout
+        var speed=3;
+        move(len - 1);
+        function move(index){
+            if(index<0){
+            	clearInterval(timer);
+                clearTimeout(timeout);
+                return;  
+               //终止函数
+            }
+            var end=150 + (index * 60);
+            timer = setInterval(function () {
+                //动量每回合自增3 模拟重力加速度
+                speed += 3; // 4 7 11   -30 -27 -24 ... 30 -30
+                //设置每一次的top值 他本身距离顶端的距离+ 动量
+                var T = oMove[index].offsetTop + speed;
+
+                //当元素的top大于设定值的时候
+                if (T > end) {
+                    T = end;
+                    speed *= -1; // 让动量变为负数
+                    speed *= 0.4; // 摩擦系数 每一次都慢一点;
+                }
+                console.log(speed)
+                oMove[index].style.top = T + 'px';
+            }, 20);
+            //过多少时间之后执行函数
+            timeout = setTimeout(function () {
+                clearInterval(timer);
+                index--;    
+                move(index); // 递归自己调用自己
+            }, 900);
+        }
+    })();
+</script>
+</body>
+</html>

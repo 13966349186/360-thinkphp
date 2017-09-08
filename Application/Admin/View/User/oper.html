@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="{:U('User/update',array('id'=>$v['id']))}" method="post" >
+<table border="1" >
+	<tr>
+	    <td>id</td>
+		<td>名字</td>
+		<td>密码</td>
+		<td>电子邮件</td>
+		<td>QQ</td>
+		<td>手机号码</td>
+		<td>注册时间</td>
+		<td>操作</td>
+	</tr>
+	<tr>
+		<td><p>{$v.id}</p></td>
+		<td><p>{$v.username}</p></td>
+		<td><input type="text" value="{$v.password}" name="password" /><p>{$arr.password}</p></td>
+		<td><input type="text" value="{$v.email}" name="email" /><p>{$arr.email}</p></td>
+		<td><input type="text" value="{$v.qq}" name="qq" /><p>{$arr.qq}</p></td>
+		<td><input type="text" value="{$v.phone}" name="phone" /><p>{$arr.phone}</p></td>
+		<td><p>{$v.addtime}</td>
+		<td><input type="submit" value="修改" />&nbsp&nbsp<input type="reset" value="删除xx" /></td>
+	</tr>
+</table>
+</form>
+</body>
+</html>

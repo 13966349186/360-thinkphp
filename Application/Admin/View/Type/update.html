@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Admin/Css/table.css"/>
+</head>
+<body>
+<div>当前操作：修改分类</div>
+<form action="__URL__/save" method="post">
+	<table class="newslist">
+		<tr>
+			<td>名称：</td>
+			<td><input value="{$arr.typename}" type="text" name="typename"/></td>
+		</tr>
+		<tr>
+			<td>父分类：</td>
+			<td><select name="fid">
+			<option value="0">顶级</option>
+			{$optionstr}
+			</select></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<input type="hidden" name="id" value="{$arr.id}"/>
+			<input type="submit" value="提交"/></td>
+		</tr>
+	</table>
+</form>
+</body>
+</html>

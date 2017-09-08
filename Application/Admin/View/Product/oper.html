@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Admin/Css/table.css"/>
+<script type="text/javascript" src="__PUBLIC__/Js/jquery.js"></script>
+
+</head>
+<body>
+<div>当前操作：管理产品</div>
+<table class="newslist">
+	<tr>
+		<th>id</th>
+		<th>title</th>
+		<th>userprice</th>
+		<th>brandname</th>
+		<th>分类</th>
+		<th>图片</th>
+		<th>操作</th>
+	</tr>
+	<foreach name='arr' item="v">
+	<tr id="tr_{$v.id}">
+		<td>{$v.id}</td>
+		<td>{$v.title}</td>
+		<td>{$v.userprice}</td>
+		<td>{$v.brandname}</td>
+		<td>{$v.typestr}</td>
+		<td><img width="100" src="__PUBLIC__/Upload/Product/{$v.imagename}"/></td>
+		<td><a href="__URL__/update/id/{$v.id}">修改</a>&nbsp;&nbsp;<a href="__URL__/del/id/{$v.id}">删除</a></td>
+	</tr>
+	</foreach>
+</table>
+<p>{$fy}</p>
+</body>
+</html>
